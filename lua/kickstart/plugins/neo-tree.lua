@@ -59,13 +59,25 @@ return {
       '<leader>e',
       function()
         require('neo-tree.command').execute {
-          toggle = true,
+          toggle = false,
           source = 'filesystem',
           position = 'left',
           action = 'focus',
         }
       end,
       desc = 'filesystem focus',
+    },
+    {
+      '<leader>et',
+      function()
+        require('neo-tree.command').execute {
+          toggle = true,
+          source = 'filesystem',
+          position = 'left',
+          action = 'show',
+        }
+      end,
+      desc = 'filesystem toggle',
     },
   },
   config = function()
