@@ -44,6 +44,20 @@ return {
             dir = '',
             package = '',
           },
+          mappings = {
+            run_test_from_buffer = { lhs = '<leader>r', desc = 'run test from buffer' },
+            filter_failed_tests = { lhs = '<leader>fe', desc = 'filter failed tests' },
+            debug_test = { lhs = '<leader>d', desc = 'debug test' },
+            go_to_file = { lhs = 'g', desc = 'got to file' },
+            run_all = { lhs = '<leader>R', desc = 'run all tests' },
+            run = { lhs = '<leader>r', desc = 'run test' },
+            peek_stacktrace = { lhs = '<leader>p', desc = 'peek stacktrace of failed test' },
+            expand = { lhs = 'o', desc = 'expand' },
+            expand_all = { lhs = 'E', desc = 'expand all' },
+            collapse_all = { lhs = 'W', desc = 'collapse all' },
+            close = { lhs = 'q', desc = 'close testrunner' },
+            refresh_testrunner = { lhs = '<C-t>', desc = 'refresh testrunner' },
+          },
           --- Optional table of extra args e.g "--blame crash"
           additional_args = {},
         },
@@ -86,38 +100,42 @@ return {
     end,
   },
   {
-    "seblj/roslyn.nvim",
-    ft = "cs",
+    'seblj/roslyn.nvim',
+    ft = 'cs',
     opts = {
-    config = {
+      config = {
         settings = {
-            ["csharp|inlay_hints"] = {
-                csharp_enable_inlay_hints_for_implicit_object_creation = true,
-                csharp_enable_inlay_hints_for_implicit_variable_types = true,
-                csharp_enable_inlay_hints_for_lambda_parameter_types = true,
-                csharp_enable_inlay_hints_for_types = true,
-                dotnet_enable_inlay_hints_for_indexer_parameters = true,
-                dotnet_enable_inlay_hints_for_literal_parameters = true,
-                dotnet_enable_inlay_hints_for_object_creation_parameters = true,
-                dotnet_enable_inlay_hints_for_other_parameters = true,
-                dotnet_enable_inlay_hints_for_parameters = true,
-                dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
-                dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
-                dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
-            },
-            ["csharp|code_lens"] = {
-                dotnet_enable_references_code_lens = true,
-            },
-			["csharp|completion"] = {
-                dotnet_show_completion_items_from_unimported_namespaces = true,
-				dotnet_show_name_completion_suggestions = true,
-            },
-			["csharp|code_lens"] = {
-                dotnet_enable_tests_code_lens = true,
-				dotnet_enable_references_code_lens = true,
-            },
-        }
-    }
-}
+          ['csharp|inlay_hints'] = {
+            csharp_enable_inlay_hints_for_implicit_object_creation = true,
+            csharp_enable_inlay_hints_for_implicit_variable_types = true,
+            csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+            csharp_enable_inlay_hints_for_types = true,
+            dotnet_enable_inlay_hints_for_indexer_parameters = true,
+            dotnet_enable_inlay_hints_for_literal_parameters = true,
+            dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+            dotnet_enable_inlay_hints_for_other_parameters = true,
+            dotnet_enable_inlay_hints_for_parameters = true,
+            dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+            dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+            dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+          },
+          ['csharp|completion'] = {
+            dotnet_show_completion_items_from_unimported_namespaces = true,
+            dotnet_show_name_completion_suggestions = true,
+          },
+          ['csharp|code_lens'] = {
+            dotnet_enable_tests_code_lens = true,
+            dotnet_enable_references_code_lens = true,
+          },
+        },
+      },
+    },
   },
+  {
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {},
+  },
+
+  { 'mfussenegger/nvim-jdtls' },
 }
