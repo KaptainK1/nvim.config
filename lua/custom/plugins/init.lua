@@ -63,6 +63,8 @@ return {
         },
         ---@param action "test" | "restore" | "build" | "run"
         terminal = function(path, action)
+          print(path)
+          print(action)
           local commands = {
             run = function()
               return 'dotnet run --project ' .. path
@@ -134,8 +136,45 @@ return {
   {
     'pmizio/typescript-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    opts = {},
+    opts = {
+      settings = {
+        publish_diagnostic_on = 'change',
+        tsserver_file_preferences = {
+          quotePreference = 'single',
+          includeInlayParameterNameHints = 'all',
+          includeCompletionsForImportStatements = true,
+          includeCompletionsForModuleExports = true,
+        },
+      },
+    },
   },
 
   { 'mfussenegger/nvim-jdtls' },
+  {
+    'm4xshen/autoclose.nvim',
+    config = {
+      keys = {
+        ['('] = { escape = false, close = true, pair = '()' },
+        ['['] = { escape = false, close = true, pair = '[]' },
+        ['{'] = { escape = false, close = true, pair = '{}' },
+
+        ['>'] = { escape = true, close = false, pair = '<>' },
+        [')'] = { escape = true, close = false, pair = '()' },
+        [']'] = { escape = true, close = false, pair = '[]' },
+        ['}'] = { escape = true, close = false, pair = '{}' },
+
+        ['"'] = { escape = true, close = true, pair = '""' },
+        ["'"] = { escape = true, close = true, pair = "''" },
+        ['`'] = { escape = true, close = true, pair = '``' },
+      },
+      options = {
+        disabled_filetypes = { 'text' },
+        disable_when_touch = false,
+        touch_regex = '[%w(%[{]',
+        pair_spaces = false,
+        auto_indent = true,
+        disable_command_mode = false,
+      },
+    },
+  },
 }
