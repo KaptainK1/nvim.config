@@ -89,9 +89,9 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
+vim.o.timeoutlen = 2000 --add slight timeout so that mini surround functions work
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -388,6 +388,9 @@ require('lazy').setup({
               ['<c-enter>'] = 'to_fuzzy_refine',
               ['<C-p>'] = require('telescope.actions.layout').toggle_preview,
             },
+          },
+          file_ignore_patterns = {
+            'coverage',
           },
         },
         -- pickers = {}
