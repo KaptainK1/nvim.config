@@ -1,5 +1,4 @@
 local ls = require 'luasnip'
-
 local s = ls.snippet
 local sn = ls.snippet_node
 local isn = ls.indent_snippet_node
@@ -29,38 +28,20 @@ local k = require('luasnip.nodes.key_indexer').new_key
 
 ls.add_snippets('all', {
 
-  ls.parser.parse_snippet({ trig = 'clg' }, '$1 is ${2|hard,easy,challenging|}'),
-  s('trig', {
+  --console.log for typescript
+  s('clg', {
+    t { "console.log('" },
     i(1),
-    t 'text',
-    i(2),
-    t 'text again',
-    i(3),
-    t 'stuff',
-  }),
-  s('ternary', {
-    -- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
-    i(1, 'cond'),
-    t ' ? ',
-    i(2, 'then'),
-    t ' : ',
-    i(3, 'else'),
-  }),
-  -- position of the node, not the jump-index!!
-  --s('trig1', { t 'first node', t 'second node', i(1, 'third node') }),
-  --[5] = {
-  -- [events.enter] = function(node, _event_args)
-  -- print '2!'
-  --end,
-  --},
-  s('trigger', {
-    t { 'After expanding, the cursor is here ->' },
-    i(1),
-    t { '', 'After jumping forward once, cursor is here ->' },
-    i(2),
-    t { '', 'After jumping once more, the snippet is exited there ->' },
-    i(0),
+    t { " >>> ' " },
+    rep(1),
+    t { ')' },
   }),
 
-  --s('')
+  --property creation for c#
+  s('prop', {
+    t { 'public ' },
+    i(1),
+    i(2),
+    t { ' { get; set; }' },
+  }),
 })
