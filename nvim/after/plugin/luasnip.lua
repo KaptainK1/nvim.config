@@ -44,4 +44,26 @@ ls.add_snippets('all', {
     i(2),
     t { ' { get; set; }' },
   }),
+
+  s(
+    'class',
+    fmt(
+      [[
+  public class {}
+  {{
+
+    public {} ({})
+    {{
+
+    }}
+
+  }}
+  ]],
+      {
+        i(1, 'ClassName'),
+        rep(1),
+        i(2, 'properties..'),
+      }
+    )
+  ),
 })
