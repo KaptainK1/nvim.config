@@ -1,4 +1,4 @@
---[[
+--[[init.lua
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
@@ -386,8 +386,11 @@ require('lazy').setup({
           mappings = {
             i = {
               ['<c-enter>'] = 'to_fuzzy_refine',
-              ['<C-p>'] = require('telescope.actions.layout').toggle_preview,
+              ['<C-p'] = require('telescope.actions.layout').toggle_preview,
             },
+          },
+          preview = {
+            hide_on_startup = true,
           },
           file_ignore_patterns = {
             'coverage',

@@ -139,7 +139,7 @@ return {
     opts = {
       settings = {
         code_lens = 'off',
-        tsserver_max_memory = 3072,
+        tsserver_max_memory = 2048,
         publish_diagnostic_on = 'change',
         tsserver_file_preferences = {
           quotePreference = 'single',
@@ -179,7 +179,7 @@ return {
           placeOpenBraceOnNewLineForFunctions = false,
           placeOpenBraceOnNewLineForControlBlocks = false,
           insertSpaceBeforeTypeAnnotation = false,
-          semicolons = 'insert',
+          semicolons = 'ignore',
           indentSize = 2,
           tabSize = 2,
           trimTrailingWhitespace = true,
