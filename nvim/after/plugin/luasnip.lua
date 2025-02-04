@@ -29,12 +29,18 @@ local k = require('luasnip.nodes.key_indexer').new_key
 ls.add_snippets('all', {
 
   --console.log for typescript
+  s('clo', {
+    t { "console.log('" },
+    i(1),
+    t { " >>> ', " },
+    rep(1),
+    t { ')' },
+  }),
+
   s('clg', {
     t { "console.log('" },
     i(1),
-    t { " >>> ' " },
-    rep(1),
-    t { ')' },
+    t { "');" },
   }),
 
   --property creation for c#
