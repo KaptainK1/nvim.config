@@ -140,6 +140,7 @@ return {
       settings = {
         code_lens = 'off',
         tsserver_max_memory = 2048,
+        expose_as_code_action = {'add_missing_imports', 'remove_unused', 'remove_unused_imports'},
         publish_diagnostic_on = 'change',
         tsserver_file_preferences = {
           quotePreference = 'single',
@@ -253,5 +254,8 @@ return {
         harpoon:list():next()
       end)
     end,
+  },
+  {
+
   },
 }
