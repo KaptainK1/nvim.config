@@ -96,9 +96,9 @@ return {
       end, {})
 
       -- Example keybinding
-      vim.keymap.set('n', '<C-p>', function()
-        dotnet.run_project()
-      end)
+      -- vim.keymap.set('n', '<C-p>', function()
+      --   dotnet.run_project()
+      -- end)
     end,
   },
   {
@@ -140,7 +140,7 @@ return {
       settings = {
         code_lens = 'off',
         tsserver_max_memory = 2048,
-        expose_as_code_action = {'add_missing_imports', 'remove_unused', 'remove_unused_imports'},
+        expose_as_code_action = { 'add_missing_imports', 'remove_unused', 'remove_unused_imports' },
         publish_diagnostic_on = 'change',
         tsserver_file_preferences = {
           quotePreference = 'single',
@@ -255,7 +255,5 @@ return {
       end)
     end,
   },
-  {
-
-  },
+  {},
 }

@@ -166,7 +166,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('n', '<leader>qd', vim.diagnostic.open_float, {desc = 'Open diagnostic'})
+vim.keymap.set('n', '<leader>qd', vim.diagnostic.open_float, { desc = 'Open diagnostics in floating window' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -387,7 +387,10 @@ require('lazy').setup({
           mappings = {
             i = {
               ['<c-enter>'] = 'to_fuzzy_refine',
-              ['<C-p'] = require('telescope.actions.layout').toggle_preview,
+              ['<C-o>'] = require('telescope.actions.layout').toggle_preview,
+            },
+            n = {
+              ['<C-o>'] = require('telescope.actions.layout').toggle_preview,
             },
           },
           preview = {
