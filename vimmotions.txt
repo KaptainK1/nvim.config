@@ -1,0 +1,32 @@
+neovim motions
+
+change inner word
+will change the whole word under the cursor
+ciw
+
+change word
+cw
+will only change the word from the current cursor position
+
+replace one occurrence of aword at a time
+cgn
+n
+.
+
+multi line comment
+ctrl-Q
+select lines
+//
+esc
+
+uncomment
+ctrl-Q
+select comments
+x
+
+go to newer cursor position
+ctrl-I
+
+-- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+      -- - sd'   - [S]urround [D]elete [']quotes
+      -- - sr)'  - [S]urround [R]eplace [)] [']
