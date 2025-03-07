@@ -30,3 +30,18 @@ ctrl-I
 -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
+
+marks
+set a mark 
+m[key]
+
+jump to mark
+m'[key]
+
+tabs
+new tab
+:tabe
+
+cycle through tabs in a window
+gt
+or gT
