@@ -139,9 +139,11 @@ return {
     opts = {
       settings = {
         code_lens = 'off',
-        tsserver_max_memory = 2048,
+        tsserver_max_memory = 3072,
+        separate_diagnostic_server = true,
+        include_completions_with_insert_text = true,
         expose_as_code_action = { 'add_missing_imports', 'remove_unused', 'remove_unused_imports' },
-        publish_diagnostic_on = 'change',
+        publish_diagnostic_on = 'insert_leave',
         tsserver_file_preferences = {
           quotePreference = 'single',
           includeInlayParameterNameHints = 'all',
@@ -190,7 +192,6 @@ return {
     },
   },
 
-  { 'mfussenegger/nvim-jdtls' },
   {
     'm4xshen/autoclose.nvim',
     config = {

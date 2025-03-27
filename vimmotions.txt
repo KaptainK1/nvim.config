@@ -45,3 +45,9 @@ new tab
 cycle through tabs in a window
 gt
 or gT
+
+paste while in insert mode
+Ctrl-R 0
+
+reset diagnostics
+:lua vim.diagnostic.reset()

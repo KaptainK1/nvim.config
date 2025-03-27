@@ -82,6 +82,37 @@ return {
   },
   config = function()
     require('neo-tree').setup {
+      close_if_last_window = true,
+      default_component_configs = {
+        name = {
+          trailing_slash = false,
+          use_git_status_colors = true,
+          highlight = 'NeoTreeFileName',
+        },
+        file_size = {
+          enabled = true,
+          width = 12, -- width of the column
+          required_width = 64, -- min width of window required to show this column
+        },
+        type = {
+          enabled = true,
+          width = 10, -- width of the column
+          required_width = 122, -- min width of window required to show this column
+        },
+        last_modified = {
+          enabled = true,
+          width = 20, -- width of the column
+          required_width = 88, -- min width of window required to show this column
+        },
+        created = {
+          enabled = true,
+          width = 20, -- width of the column
+          required_width = 110, -- min width of window required to show this column
+        },
+        symlink_target = {
+          enabled = false,
+        },
+      },
       filesystem = {
         filtered_items = {
           visible = true,
@@ -93,6 +124,7 @@ return {
           enabled = true,
           leave_dirs_open = true,
         },
+        hijack_netrw_behavior = 'open_current',
       },
       buffers = {
         follow_current_file = {
