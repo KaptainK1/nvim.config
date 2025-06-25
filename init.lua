@@ -16,7 +16,7 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -107,7 +107,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('i', '<C-l>', '<right>', { desc = 'Move cursor right in insert mode' })
 vim.keymap.set('i', '<C-h>', '<left>', { desc = 'Move cursor left in insert mode' })
 
-vim.keymap.set('n', '<leader>p', '"0p', {desc = 'Paste previously yanked text'})
+vim.keymap.set('n', '<leader>p', '"0p', { desc = 'Paste previously yanked text' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -372,6 +372,10 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+
+      vim.keymap.set('n', '<leader>sp', function()
+        builtin.find_files { cwd = 'C:\\Users\\dylan.hoffman\\Documents\\dev' }
+      end, { desc = '[S]earch [P]roject Files' })
     end,
   },
 
@@ -527,14 +531,14 @@ require('lazy').setup({
       })
 
       -- Change diagnostic symbols in the sign column (gutter)
-      -- if vim.g.have_nerd_font then
-      --   local signs = { ERROR = '', WARN = '', INFO = '', HINT = '' }
-      --   local diagnostic_signs = {}
-      --   for type, icon in pairs(signs) do
-      --     diagnostic_signs[vim.diagnostic.severity[type]] = icon
-      --   end
-      --   vim.diagnostic.config { signs = { text = diagnostic_signs } }
-      -- end
+      if vim.g.have_nerd_font then
+        local signs = { ERROR = '', WARN = '', INFO = '', HINT = '' }
+        local diagnostic_signs = {}
+        for type, icon in pairs(signs) do
+          diagnostic_signs[vim.diagnostic.severity[type]] = icon
+        end
+        vim.diagnostic.config { virtual_text = true, signs = { text = diagnostic_signs } }
+      end
 
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP specification.
@@ -587,7 +591,12 @@ require('lazy').setup({
       --    :Mason
       --
       --  You can press `g?` for help in this menu.
-      require('mason').setup()
+      require('mason').setup {
+        registries = {
+          'github:mason-org/mason-registry',
+          'github:Crashdummyy/mason-registry',
+        },
+      }
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
@@ -704,7 +713,7 @@ require('lazy').setup({
 
       vim.keymap.set('n', '<leader><leader>s', '<cmd>source ~\\AppData\\Local\\nvim\\nvim\\after\\plugin\\luasnip.lua<CR>')
       cmp.setup {
-	          sources = {
+        sources = {
           {
             name = 'lazydev',
             -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
@@ -713,7 +722,7 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
-		  { name = 'buffer' },
+          { name = 'buffer' },
         },
         snippet = {
           expand = function(args)
@@ -771,14 +780,14 @@ require('lazy').setup({
           end, { 'i', 's' }),
         },
       }
-	  cmp.setup.filetype({'sql'}, {
+      cmp.setup.filetype({ 'sql' }, {
         sources = {
-          {name = 'vim-dadbod-completion'},
-          {name = 'buffer'},
+          { name = 'vim-dadbod-completion' },
+          { name = 'buffer' },
         },
       })
-	  end,
-	  },
+    end,
+  },
 
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
