@@ -109,6 +109,16 @@ vim.keymap.set('i', '<C-h>', '<left>', { desc = 'Move cursor left in insert mode
 
 vim.keymap.set('n', '<leader>p', '"0p', { desc = 'Paste previously yanked text' })
 
+-- run yarn in a split window
+vim.keymap.set('n', '<leader>ys', ':split | term yarn start:main <CR>', { desc = 'yarn start in split window' })
+vim.keymap.set('n', '<leader>yl', ':split | term yarn lint:app-nebula <CR>', { desc = 'yarn lint in split window' })
+vim.keymap.set('n', '<leader>yf', ':split | term yarn lint:app-nebula --fix --quiet <CR>', { desc = 'yarn fix lint' })
+vim.keymap.set('n', '<leader>yt', ':split | term yarn run test <CR>', { desc = 'yarn run test' })
+--vim.keymap.set('n', '<leader>ys', function()
+--  vim.api.nvim_cmd({ 'split' }, {})
+--  vim.api.nvim_cmd({ 'term' }, { 'yarn start:main' })
+--end, { desc = 'yarn start:main in split window' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -655,6 +665,8 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        typescript = { 'eslint_d' },
+        javascript = { 'eslint_d' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -890,6 +902,7 @@ require('lazy').setup({
 
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
   require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.lint',
 
   { import = 'custom.plugins' },
 }, {
@@ -912,5 +925,38 @@ require('lazy').setup({
   },
 })
 
+vim.lsp.config('roslyn', {
+  settings = {
+    ['csharp|inlay_hints'] = {
+      csharp_enable_inlay_hints_for_implicit_object_creation = true,
+      csharp_enable_inlay_hints_for_implicit_variable_types = true,
+      csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+      csharp_enable_inlay_hints_for_types = true,
+      dotnet_enable_inlay_hints_for_indexer_parameters = true,
+      dotnet_enable_inlay_hints_for_literal_parameters = true,
+      dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+      dotnet_enable_inlay_hints_for_other_parameters = true,
+      dotnet_enable_inlay_hints_for_parameters = true,
+      dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+      dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+      dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+    },
+    ['csharp|completion'] = {
+      dotnet_show_completion_items_from_unimported_namespaces = true,
+      dotnet_show_name_completion_suggestions = true,
+    },
+    ['csharp|code_lens'] = {
+      dotnet_enable_tests_code_lens = true,
+      dotnet_enable_references_code_lens = true,
+    },
+    ['csharp|background_analysis'] = {
+      dotnet_analyzer_diagnostics_scope = 'openFiles',
+      dotnet_compiler_diagnostics_scope = 'openFiles',
+    },
+    ['csharp|symbol_search'] = {
+      dotnet_search_reference_assemblies = true,
+    },
+  },
+})
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -82,7 +82,7 @@ return {
   },
   config = function()
     require('neo-tree').setup {
-      close_if_last_window = true,
+      close_if_last_window = false,
       default_component_configs = {
         name = {
           trailing_slash = false,
@@ -117,7 +117,7 @@ return {
         filtered_items = {
           visible = true,
           show_hidden_count = true,
-          hide_dotfiles = false,
+          hide_dotfiles = true,
           hide_gitignored = true,
         },
         follow_current_file = {

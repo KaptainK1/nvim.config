@@ -110,40 +110,6 @@ return {
     },
   },
 
-  vim.lsp.config('roslyn', {
-    settings = {
-      ['csharp|inlay_hints'] = {
-        csharp_enable_inlay_hints_for_implicit_object_creation = true,
-        csharp_enable_inlay_hints_for_implicit_variable_types = true,
-        csharp_enable_inlay_hints_for_lambda_parameter_types = true,
-        csharp_enable_inlay_hints_for_types = true,
-        dotnet_enable_inlay_hints_for_indexer_parameters = true,
-        dotnet_enable_inlay_hints_for_literal_parameters = true,
-        dotnet_enable_inlay_hints_for_object_creation_parameters = true,
-        dotnet_enable_inlay_hints_for_other_parameters = true,
-        dotnet_enable_inlay_hints_for_parameters = true,
-        dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
-        dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
-        dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
-      },
-      ['csharp|completion'] = {
-        dotnet_show_completion_items_from_unimported_namespaces = true,
-        dotnet_show_name_completion_suggestions = true,
-      },
-      ['csharp|code_lens'] = {
-        dotnet_enable_tests_code_lens = true,
-        dotnet_enable_references_code_lens = true,
-      },
-      ['csharp|background_analysis'] = {
-        dotnet_analyzer_diagnostics_scope = 'openFiles',
-        dotnet_compiler_diagnostics_scope = 'openFiles',
-      },
-      ['csharp|symbol_search'] = {
-        dotnet_search_reference_assemblies = true,
-      },
-    },
-  }),
-
   {
     'pmizio/typescript-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
@@ -203,33 +169,33 @@ return {
     },
   },
 
-  --  {
-  --    'm4xshen/autoclose.nvim',
-  --    config = {
-  --      keys = {
-  --        ['('] = { escape = false, close = true, pair = '()' },
-  --        ['['] = { escape = false, close = true, pair = '[]' },
-  --        ['{'] = { escape = false, close = true, pair = '{}' },
-  --
-  --        ['>'] = { escape = true, close = false, pair = '<>' },
-  --        [')'] = { escape = true, close = false, pair = '()' },
-  --        [']'] = { escape = true, close = false, pair = '[]' },
-  --        ['}'] = { escape = true, close = false, pair = '{}' },
-  --
-  --        ['"'] = { escape = true, close = true, pair = '""' },
-  --        ["'"] = { escape = true, close = true, pair = "''" },
-  --        ['`'] = { escape = true, close = true, pair = '``' },
-  --      },
-  --      options = {
-  --        disabled_filetypes = { 'text', 'markdown' },
-  --        disable_when_touch = false,
-  --        touch_regex = '[%w(%[{]',
-  --        pair_spaces = false,
-  --        auto_indent = true,
-  --        disable_command_mode = false,
-  --      },
-  --    },
-  --  },
+  {
+    'm4xshen/autoclose.nvim',
+    config = {
+      keys = {
+        ['('] = { escape = false, close = true, pair = '()' },
+        ['['] = { escape = false, close = true, pair = '[]' },
+        ['{'] = { escape = false, close = true, pair = '{}' },
+
+        ['>'] = { escape = true, close = false, pair = '<>' },
+        [')'] = { escape = true, close = false, pair = '()' },
+        [']'] = { escape = true, close = false, pair = '[]' },
+        ['}'] = { escape = true, close = false, pair = '{}' },
+
+        ['"'] = { escape = true, close = true, pair = '""' },
+        ["'"] = { escape = true, close = true, pair = "''" },
+        ['`'] = { escape = true, close = true, pair = '``' },
+      },
+      options = {
+        disabled_filetypes = { 'text', 'markdown' },
+        disable_when_touch = true,
+        touch_regex = '[%w(%[{]',
+        pair_spaces = false,
+        auto_indent = true,
+        disable_command_mode = true,
+      },
+    },
+  },
   {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
@@ -315,4 +281,79 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
     opts = {},
   },
+  -- {
+  --   'https://github.com/esmuellert/nvim-eslint',
+  --   config = function()
+  --     require('nvim-eslint').setup {
+  --       -- Toggle debug mode for ESLint language server, see debugging part
+  --       debug = false,
+
+  --       -- Command to launch language server. You might hardly want to change this setting
+  --       cmd = M.create_cmd(),
+
+  --       -- root_dir is used by Neovim LSP client API to determine if to attach or launch new LSP
+  --       -- The default configuration uses the git root folder as the root_dir
+  --       -- For monorepo it can have many projects, so launching too many LSP for one workspace is not efficient
+  --       -- You can override it with passing function(bufnr)
+  --       -- It should receive active buffer number and return root_dir
+  --       root_dir = M.resolve_git_dir(args.buf),
+
+  --       -- A table used to determine what filetypes trigger the start of LSP
+  --       filetypes = { 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' },
+
+  --       -- The client capabilities for LSP Protocol. See Nvim LSP docs for details
+  --       -- It uses the default Nvim LSP client capabilities. Adding the capability to dynamically change configs
+  --       capabilities = M.make_client_capabilities(),
+
+  --       handlers = {
+  --         -- The handlers handles language server responses. See Nvim LSP docs for details
+  --         -- The default handlers only has a rewrite of default "workspace/configuration" handler of Nvim LSP
+  --         -- Basically, when you load a new buffer, ESLint LSP requests the settings with this request
+  --         -- To make it work with monorepo, the workingDirectory setting needs to be calculated at runtime
+  --         -- This is the main reaason for rewriting, and it also works if you have a simple structure repo
+  --         -- You might add more custom handler with reference to LSP protocol spec and vscode-eslint code
+  --       },
+
+  --       -- The settings send to ESLint LSP. See below part for details.
+  --       settings = {
+  --         validate = 'on',
+  --         -- packageManager = 'pnpm',
+  --         useESLintClass = true,
+  --         useFlatConfig = function(bufnr)
+  --           return M.use_flat_config(bufnr)
+  --         end,
+  --         experimental = { useFlatConfig = false },
+  --         codeAction = {
+  --           disableRuleComment = {
+  --             enable = true,
+  --             location = 'separateLine',
+  --           },
+  --           showDocumentation = {
+  --             enable = true,
+  --           },
+  --         },
+  --         codeActionOnSave = { mode = 'all' },
+  --         format = false,
+  --         quiet = false,
+  --         onIgnoredFiles = 'off',
+  --         options = {},
+  --         rulesCustomizations = {},
+  --         run = 'onType',
+  --         problems = { shortenToSingleLine = false },
+  --         nodePath = function(bufnr)
+  --           return M.resolve_node_path()
+  --         end,
+  --         workingDirectory = { mode = 'location' },
+  --         workspaceFolder = function(bufnr)
+  --           local git_dir = M.resolve_git_dir(bufnr)
+  --           print(vim.inspect(git_dir))
+  --           return {
+  --             uri = vim.uri_from_fname(git_dir),
+  --             name = vim.fn.fnamemodify(git_dir, ':t'),
+  --           }
+  --         end,
+  --       },
+  --     }
+  --   end,
+  -- },
 }
