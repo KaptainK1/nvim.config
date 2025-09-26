@@ -69,7 +69,7 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 20
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -81,6 +81,13 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('n', '<leader>qd', vim.diagnostic.open_float, { desc = 'Open diagnostics in floating window' })
+vim.keymap.set('n', ']g', function()
+  vim.diagnostic.goto_next { severity = vim.diagnostic.severity.ERROR }
+end, { desc = 'Goto next error' })
+
+vim.keymap.set('n', '[g', function()
+  vim.diagnostic.goto_prev { severity = vim.diagnostic.severity.ERROR }
+end, { desc = 'Goto previous error' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -109,15 +116,14 @@ vim.keymap.set('i', '<C-h>', '<left>', { desc = 'Move cursor left in insert mode
 
 vim.keymap.set('n', '<leader>p', '"0p', { desc = 'Paste previously yanked text' })
 
+vim.keymap.set('n', '<C-j>', '<C-d>', { desc = 'Move page down' })
+vim.keymap.set('n', '<C-k>', '<C-u>', { desc = 'Move page up' })
+
 -- run yarn in a split window
 vim.keymap.set('n', '<leader>ys', ':split | term yarn start:main <CR>', { desc = 'yarn start in split window' })
 vim.keymap.set('n', '<leader>yl', ':split | term yarn lint:app-nebula <CR>', { desc = 'yarn lint in split window' })
 vim.keymap.set('n', '<leader>yf', ':split | term yarn lint:app-nebula --fix --quiet <CR>', { desc = 'yarn fix lint' })
 vim.keymap.set('n', '<leader>yt', ':split | term yarn run test <CR>', { desc = 'yarn run test' })
---vim.keymap.set('n', '<leader>ys', function()
---  vim.api.nvim_cmd({ 'split' }, {})
---  vim.api.nvim_cmd({ 'term' }, { 'yarn start:main' })
---end, { desc = 'yarn start:main in split window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`

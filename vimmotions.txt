@@ -53,3 +53,10 @@ reset diagnostics
 :lua vim.diagnostic.reset()
 
 shift k > peek definition
+
+
+[m previous method start
+[M previous method end
+
+]m next method start
+]M next method end
