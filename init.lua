@@ -1,11 +1,12 @@
--- Set <space> as the leader key
--- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.o.timeoutlen = 2000 --add slight timeout so that mini surround functions work
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
+
+if vim.g.neovide then
+end
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -116,14 +117,21 @@ vim.keymap.set('i', '<C-h>', '<left>', { desc = 'Move cursor left in insert mode
 
 vim.keymap.set('n', '<leader>p', '"0p', { desc = 'Paste previously yanked text' })
 
-vim.keymap.set('n', '<C-j>', '<C-d>', { desc = 'Move page down' })
-vim.keymap.set('n', '<C-k>', '<C-u>', { desc = 'Move page up' })
+vim.keymap.set('n', '<S-j>', '<C-d>', { desc = 'Move page down' })
+vim.keymap.set('n', '<S-k>', '<C-u>', { desc = 'Move page up' })
+
+vim.keymap.set('n', '<A-j>', "<cmd>execute 'move .+' . v:count1<cr>==", { desc = 'Move Down' })
+vim.keymap.set('n', '<A-k>', "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = 'Move Up' })
+vim.keymap.set('i', '<A-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
+vim.keymap.set('i', '<A-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
 
 -- run yarn in a split window
 vim.keymap.set('n', '<leader>ys', ':split | term yarn start:main <CR>', { desc = 'yarn start in split window' })
 vim.keymap.set('n', '<leader>yl', ':split | term yarn lint:app-nebula <CR>', { desc = 'yarn lint in split window' })
 vim.keymap.set('n', '<leader>yf', ':split | term yarn lint:app-nebula --fix --quiet <CR>', { desc = 'yarn fix lint' })
 vim.keymap.set('n', '<leader>yt', ':split | term yarn run test <CR>', { desc = 'yarn run test' })
+
+vim.keymap.set('n', '<C-s>', ':wa<CR>', { desc = 'save all' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -813,7 +821,16 @@ require('lazy').setup({
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
     'folke/tokyonight.nvim',
+
+    lazy = false,
     priority = 1000, -- Make sure to load this before all the other start plugins.
+    --opts = {
+    --transparent = true,
+    --styles = {
+    --sidebars = "transparent",
+    --floats = "transparent",
+    --}
+    --},
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
@@ -827,6 +844,41 @@ require('lazy').setup({
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+
+  {
+    'folke/snacks.nvim',
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      explorer = {
+        replace_netrw = true,
+        trash = true,
+      },
+      bufdelete = {
+        enabled = true,
+      },
+    },
+    keys = {
+      {
+        '<leader>et',
+        function()
+          Snacks.explorer()
+        end,
+        desc = 'File Explorer',
+      },
+      {
+        '<leader>bd',
+        function()
+          Snacks.bufdelete()
+        end,
+        desc = 'Delete Buffer',
+      },
+    },
+  },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
@@ -907,7 +959,7 @@ require('lazy').setup({
   },
 
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
-  require 'kickstart.plugins.neo-tree',
+  --require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.lint',
 
   { import = 'custom.plugins' },
@@ -964,5 +1016,37 @@ vim.lsp.config('roslyn', {
     },
   },
 })
+
+require('goto-preview').setup {
+  width = 150, -- Width of the floating window
+  height = 30, -- Height of the floating window
+  border = { '↖', '─', '┐', '│', '┘', '─', '└', '│' }, -- Border characters of the floating window
+  default_mappings = true, -- Bind default mappings
+  debug = false, -- Print debug information
+  opacity = 5, -- 0-100 opacity level of the floating window where 100 is fully transparent.
+  resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
+  post_open_hook = function(buf)
+    vim.api.nvim_buf_set_keymap(buf, 'n', '<ESC>', ':close<CR>', {
+      silent = true,
+      nowait = true,
+      noremap = true,
+    })
+  end, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+  post_close_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+  references = { -- Configure the telescope UI for slowing the references cycling window.
+    provider = 'telescope', -- telescope|fzf_lua|snacks|mini_pick|default
+    telescope = require('telescope.themes').get_dropdown { hide_preview = false },
+  },
+  -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
+  focus_on_open = true, -- Focus the floating window when opening it.
+  dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
+  force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
+  bufhidden = 'wipe', -- the bufhidden option to set on the floating window. See :h bufhidden
+  stack_floating_preview_windows = true, -- Whether to nest floating windows
+  same_file_float_preview = true, -- Whether to open a new floating window for a reference within the current file
+  preview_window_title = { enable = true, position = 'left' }, -- Whether to set the preview window title as the filename
+  zindex = 1, -- Starting zindex for the stack of floating windows
+  vim_ui_input = true, -- Whether to override vim.ui.input with a goto-preview floating window
+}
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

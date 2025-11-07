@@ -60,3 +60,6 @@ shift k > peek definition
 
 ]m next method start
 ]M next method end
+
+create empty line above cursor in insert mode
+<leader>O
